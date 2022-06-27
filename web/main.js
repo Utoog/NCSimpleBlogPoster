@@ -20,6 +20,6 @@ eel.expose(shitsposted);
 function shitsposted(){
 	alert("Posted succesfully!")
 	document.querySelector('input[name="title"]').value = "";
-	document.getElementById('body').value == "";
+	document.getElementById('body').value = "";
 	document.querySelector('input[name="time"]').value = "";
 }
