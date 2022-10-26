@@ -19,7 +19,7 @@ def uploadpost(title, body):
 def uploadguest(title, body, date):
 	# date (d.m.y H:M)
 	db = TinyDB("guestbook.json")
-	db.insert({"name": name, "body": body, "date": date})
+	db.insert({"name": title, "body": body, "date": date})
 	nc.upload(('guestbook.json', 'guestbook.json'))
 	eel.shitsposted()
 

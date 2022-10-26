@@ -12,7 +12,7 @@ function post(){
 		title = document.querySelector('input[name="title"]').value;
 		body = document.getElementById('body').value;
 		datetime = document.querySelector('input[name="time"]').value;
-		eel.uploadpost(title, body);
+		eel.uploadguest(title, body, datetime);
 	}
 }
 
