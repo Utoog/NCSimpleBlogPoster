@@ -1,4 +1,11 @@
-# Neocities blog poster
-A little tool i created for myself to post things on my private blog. Decided to Open Source it after a long time.  
+# NC simple blog poster
+A little tool i created for myself to post things on my private blog.
+
+## Dependencies
+- eel
+- neocities (api library)
+- TinyDB
+
 ## GOALS
-- make more goals
+- Make configs
+- Make configs customizable via UI
