@@ -5,8 +5,7 @@ import neocities        # you need to install it yourself
 import eel
 import json
 
-def get_remote_posts():
-    url = "https://" + nc_url + "/" + remote_directory + posts_filename
+def get_remote_posts(url):
     response = requests.get(url)
     filepath = posts_filename
     if response.status_code == 200:
@@ -34,14 +33,15 @@ def upload_new_post(title, body):
 app_config = load_config()
 nc_api_key = app_config["nc_api"]
 nc_profile_name = app_config["nc_profile"]
-custom_domain = bool(app_config["custom_domain"])
+custom_domain = True if app_config["custom_domain"].lower() == "true" else False
 format_string = app_config["timedate_format"]
 remote_directory = app_config["remote_directory"]
 
-nc_url = nc_profile_name if custom_domain else nc_profile_name + ".neocities.org"
-get_remote_posts()
 posts_name = "posts"
 posts_filename = posts_name + ".json"
+nc_url = nc_profile_name if custom_domain else (nc_profile_name + ".neocities.org")
+url = "https://" + nc_url + "/" + remote_directory + posts_filename
+get_remote_posts(url)
 
 # Where your post file will be saved on your neocities page (DEFAULT: "")
 
