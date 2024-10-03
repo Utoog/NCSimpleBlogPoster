@@ -9,10 +9,10 @@ neocities_api_key = ""
 
 # !!INSERT YOUR PROFILE NAME OR FULL CUSTOM DOMAIN HERE!!
 neocities_profile_name = ""
+
 custom_domain = False
 neocities_url = neocities_profile_name if custom_domain else neocities_profile_name + ".neocities.org"
 
-# Blog post json file name (DEFAULT: "posts")
 posts_name = "posts"
 posts_filename = posts_name + ".json"
 

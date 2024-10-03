@@ -1,2 +1,3 @@
-posts.json
-guestbook.json
+*.json
+
+/venv/

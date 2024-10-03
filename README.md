@@ -3,7 +3,7 @@ A little tool i created for myself to post things on my private blog.
 
 ## Dependencies
 - eel
-- neocities (api library)
+- neocities https://github.com/neocities/python-neocities
 - TinyDB
 
 ## GOALS
