@@ -1,31 +1,24 @@
 from tinydb import TinyDB
-import urllib.request
+import requests
 import datetime
 import neocities        # you need to install it yourself
 import eel
+import json
 
-# !!INSERT YOUR NEOCITIES API KEY HERE!!
-neocities_api_key = "" 
+def get_remote_posts(url):
+    response = requests.get(url)
+    filepath = posts_filename
+    if response.status_code == 200:
+        with open(filepath, "wb") as file:
+            file.write(response.content)
+        return True
+    else:
+        return False
 
-# !!INSERT YOUR PROFILE NAME OR FULL CUSTOM DOMAIN HERE!!
-neocities_profile_name = ""
-
-custom_domain = False
-neocities_url = neocities_profile_name if custom_domain else neocities_profile_name + ".neocities.org"
-
-posts_name = "posts"
-posts_filename = posts_name + ".json"
-
-# Where your post file will be saved on your neocities page (DEFAULT: "")
-web_post_directory = ""
-
-nc = neocities.NeoCities(api_key=neocities_api_key)
-
-# TODO: add a check if remote file exists
-urllib.request.urlretrieve("https://" + neocities_url + "/" + web_post_directory + posts_filename, posts_filename)
-
-# How do you want your date displayed on your posts (Default: "%d.%m.%Y %H:%M" = "20.1.2000 12:00")
-format_string = "%d.%m.%Y %H:%M"
+def load_config():
+    with open("config.json", "r") as configfile:
+        data = json.load(configfile)
+    return data
 
 def get_current_timedate():
     return str(datetime.datetime.now().strftime(format_string))
@@ -34,8 +27,25 @@ def get_current_timedate():
 def upload_new_post(title, body):
 	db = TinyDB(posts_filename)
 	db.insert({"title": title, "body": body, "date": get_current_timedate()})
-	nc.upload((posts_filename, web_post_directory + posts_filename))
+	nc.upload((posts_filename, remote_directory + posts_filename))
 	eel.indicate_post()
+
+app_config = load_config()
+nc_api_key = app_config["nc_api"]
+nc_profile_name = app_config["nc_profile"]
+custom_domain = True if app_config["custom_domain"].lower() == "true" else False
+format_string = app_config["timedate_format"]
+remote_directory = app_config["remote_directory"]
+
+posts_name = "posts"
+posts_filename = posts_name + ".json"
+nc_url = nc_profile_name if custom_domain else (nc_profile_name + ".neocities.org")
+url = "https://" + nc_url + "/" + remote_directory + posts_filename
+get_remote_posts(url)
+
+# Where your post file will be saved on your neocities page (DEFAULT: "")
+
+nc = neocities.NeoCities(api_key=nc_api_key)
 
 eel.init("web")
 eel.start("main.html", size=(570, 400))
